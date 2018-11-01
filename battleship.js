@@ -81,26 +81,37 @@ function printShip() {
   debugger
 
   for (let i = 0 ; i < ships.length ; i++){
-    iawal = random()
-    jawal = random()
+    let iawal = random()
+    let jawal = random()
     let value = arah[Math.round(Math.random())]
     let flag = true
     var arr = []
     var cek = false
 
     while(cek === false){
-
+      iawal = random()
+      jawal = random()
+      value = arah[Math.round(Math.random())]
+      cek = true
+      flag = true
+      arr = []
       for(let j = 0 ; j < ships[i].size ; j++){
         if(value === 'vertikal'){
+          // console.log(iawal + j, jawal, 'ini koor vertical')
           if (checkCoordinate(iawal+j, jawal) === false) {
             flag = false
-          }else {
+            cek = false
+            break
+          } else {
             // console.log('masuk sini ver')
             arr.push([iawal+j,jawal])
           }
         } else if ( value === 'horizontal'){
+          // console.log(i, jawal + j, 'ini koor hori')
           if (checkCoordinate(iawal, jawal+j) === false) {
             flag = false
+            cek = false
+            break
           } else {
             // console.log('masuk sini ver')
 
@@ -108,8 +119,8 @@ function printShip() {
           }
         }
       }
+      // console.log(arr, 'ini array', cek, '====', ships[i].print)
     }
-    // console.log(arr)
     if(flag === true) {
       ships[i].pos = arr
       for(let j = 0 ; j < ships[i].size ; j++){
@@ -134,6 +145,10 @@ function checkCoordinate(row, col) {
   if(temp[row] === undefined){
     return condition
   }
+  if ( row > 9 || col > 9 ) {
+    return condition
+  }
+
   if(temp[row][col] === ' '){
     condition = true
   }
@@ -142,7 +157,7 @@ function checkCoordinate(row, col) {
 
 
 function random() {
-  var angka = Math.floor(Math.random() * 10)
+  var angka = Math.floor(Math.random() * 9)
   return angka
 }
 
