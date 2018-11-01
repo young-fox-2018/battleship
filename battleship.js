@@ -9,7 +9,7 @@ function generateBoard(num) {
     for (let i = 0; i < num; i++) {
         let tmp = []
         for (let j = 0; j < num; j++) {
-            tmp.push(' ')
+            tmp.push('~')
         }
         board.push(tmp)
     }
@@ -26,21 +26,21 @@ function aircraftCarrier(boardBattleship) {
         x = randomCoordinate(num)
         y = randomCoordinate(num)
         if (y <= num - 5) {
-            board[x][y] = 'a'
-            board[x][y + 1] = 'a'
-            board[x][y + 2] = 'a'
-            board[x][y + 3] = 'a'
-            board[x][y + 4] = 'a'
+            board[x][y] = 'A'
+            board[x][y + 1] = 'A'
+            board[x][y + 2] = 'A'
+            board[x][y + 3] = 'A'
+            board[x][y + 4] = 'A'
             bisa = true
             break
 
         }
         else if (x <= num - 5) {
-            board[x][y] = 'a'
-            board[x + 1][y] = 'a'
-            board[x + 2][y] = 'a'
-            board[x + 3][y] = 'a'
-            board[x + 4][y] = 'a'
+            board[x][y] = 'A'
+            board[x + 1][y] = 'A'
+            board[x + 2][y] = 'A'
+            board[x + 3][y] = 'A'
+            board[x + 4][y] = 'A'
             bisa = true
             break
         }
@@ -56,19 +56,19 @@ function battleShip(boardBattleship) {
         x = randomCoordinate(num)
         y = randomCoordinate(num)
         if (y <= num - 4) {
-            board[x][y] = 'b'
-            board[x][y + 1] = 'b'
-            board[x][y + 2] = 'b'
-            board[x][y + 3] = 'b'
+            board[x][y] = 'B'
+            board[x][y + 1] = 'B'
+            board[x][y + 2] = 'B'
+            board[x][y + 3] = 'B'
             bisa = true
             break
 
         }
         else if (x <= num - 4) {
-            board[x][y] = 'b'
-            board[x + 1][y] = 'b'
-            board[x + 2][y] = 'b'
-            board[x + 3][y] = 'b'
+            board[x][y] = 'B'
+            board[x + 1][y] = 'B'
+            board[x + 2][y] = 'B'
+            board[x + 3][y] = 'B'
             bisa = true
             break
         }
@@ -83,16 +83,16 @@ function cruiser(boardBattleship) {
         x = randomCoordinate(num)
         y = randomCoordinate(num)
         if (x <= num - 3) {
-            board[x][y] = 'c'
-            board[x + 1][y] = 'c'
-            board[x + 2][y] = 'c'
+            board[x][y] = 'C'
+            board[x + 1][y] = 'C'
+            board[x + 2][y] = 'C'
             bisa = true
             break
         }
         else if (y <= num - 3) {
-            board[x][y] = 'c'
-            board[x][y + 1] = 'c'
-            board[x][y + 2] = 'c'
+            board[x][y] = 'C'
+            board[x][y + 1] = 'C'
+            board[x][y + 2] = 'C'
             bisa = true
             break
 
@@ -108,14 +108,14 @@ function destroyer(boardBattleship) {
         x = randomCoordinate(num)
         y = randomCoordinate(num)
         if (x <= num - 3) {
-            board[x][y] = 'd'
-            board[x + 1][y] = 'd'
+            board[x][y] = 'D'
+            board[x + 1][y] = 'D'
             bisa = true
             break
         }
         else if (y <= num - 3) {
-            board[x][y] = 'd'
-            board[x][y + 1] = 'd'
+            board[x][y] = 'D'
+            board[x][y + 1] = 'D'
             bisa = true
             break
 
@@ -139,16 +139,16 @@ function validation() {
         let board = boardBattleship
         for (let i = 0; i < board.length; i++) {
             for (let j = 0; j < board.length; j++) {
-                if (board[i][j] === 'a') {
+                if (board[i][j] === 'A') {
                     a++
                 }
-                if (board[i][j] === 'b') {
+                if (board[i][j] === 'B') {
                     b++
                 }
-                if (board[i][j] === 'c') {
+                if (board[i][j] === 'C') {
                     c++
                 }
-                if (board[i][j] === 'd') {
+                if (board[i][j] === 'D') {
                     d++
                 }
             }
@@ -159,14 +159,67 @@ function validation() {
     }
 }
 
+function shipDestroyed(board) {
+    let a = 0; b = 0; c = 0; d = 0
+    for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board.length; j++) {
+            switch (board[i][j]) {
+                case 'A':
+                    a++
+                    break;
+                case 'B':
+                    b++
+                    break;
+                case 'C':
+                    c++
+                    break;
+                case 'D':
+                    d++
+                    break;
+            }
+        }
+    }
+    if (a <= 5) {
+        console.log("Aircraft Carrier destroyed")
+    }
+}
+
 let coordinate = process.argv
-let bom1 = coordinate[2]
-let bom2 = coordinate[3]
-let bom3 = coordinate[4]
+let bomb = [coordinate[2], coordinate[3], coordinate[4]]
+
 let board = validation()
 
-board[bom1[0]][bom1[1]] = 'x'
-board[bom2[0]][bom2[1]] = 'x'
-board[bom3[0]][bom3[1]] = 'x'
+for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board.length; j++) {
+        for (let k = 0; k < bomb.length; k++) {
+            if (i === Number(bomb[k][0]) && j === Number(bomb[k][1])) {
+                if (board[i][j] === '~') {
+                    board[i][j] = '*'
+                }
+                else {
+                    switch (board[i][j]) {
+                        case 'A':
+                        console.log('Aircraft Carrier has been destroyed')
+                        board[i][j] = 'X'
+                            break;
+                        case 'B':
+                        console.log('Battleship has been destroyed')
+                        board[i][j] = 'X'
+                            break;
+                        case 'C':
+                        console.log('Cruiser has been destroyed')
+                        board[i][j] = 'X'
+                            break;
+                        case 'D':
+                        console.log('Destroyer has been destroyed')
+                        board[i][j] = 'X'
+                            break;
+                    }
+                }
+            }
+        }
+
+    }
+}
 console.log(board)
 
