@@ -190,7 +190,8 @@ function display() {
             if (alph[i] == process.argv[2][0] && j == process.argv[2][1] && col[i][j] !== ' ') {
                 str = col[i][j]
                 col[i][j] = 'O'
-                
+            } else if (alph[i] == process.argv[2][0] && j == process.argv[2][1]) {
+                col[i][j] = 'O'
             }
             
         }
