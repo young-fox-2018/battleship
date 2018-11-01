@@ -70,6 +70,14 @@ function printBoard(){
         // console.log(coordinateBombs);
     }
 
+    board = boardFinishing(board);
+    return board;
+}
+
+function boardFinishing(board) {
+    for (let i = 0; i < board.length; i++) {
+        board[i] = board[i].join('');    
+    }
 
     return board.join('\n');
 }
