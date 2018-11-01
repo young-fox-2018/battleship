@@ -132,9 +132,19 @@ function printShip() {
       }
     }
   }
+
+  for(let a = 0 ; a < bom.length ; a++) {
+    if(temp[bom[a][0]-1][bom[a][1]-1] !== ' '){
+    temp[bom[a][0]-1][bom[a][1]-1] = 'X'
+    // return 'Yeay kapal tenggelam'
+  } else {
+    temp[bom[a][0]-1][bom[a][1]-1] = '/'
+  }
+}
   return temp
 }
 
+var bom = process.argv.slice(2)
 console.log(printShip())
 
 function checkCoordinate(row, col) {
@@ -161,14 +171,14 @@ function random() {
   return angka
 }
 
-var bom = process.argv.slice(2)
 
 // console.log(bom)
-var tampung = []
-for (let i = 0 ; i < bom.length ; i++) {
-  tampung.push([bom[i][0] , bom[i][1]] )
-}
+// var tampung = []
+// for (let i = 0 ; i < bom.length ; i++) {
+//   tampung.push([bom[i][0] , bom[i][1]])
+// }
 // console.log(tampung)
+// console.log(bom)
 
 function bandingBom() {
   var kena = false
@@ -184,25 +194,3 @@ function bandingBom() {
   }
   return kena
 }
-
-// function showShip() {
-//   // ships
-//   let board = temp 
-
-//   // looping board 
-//     // looping ships 
-//       // bandingkan koordinat ship dengan koordinat board 
-//   for ( let i = 0 ; i < board.length ; i ++) {
-//     for (let j = 0 ; j < board[i].length ; j++) {
-//       for (let a = 0 ; a < ships.length ; a++) {
-//         for (let b = 0 ; b < ships[a].pos.length ; b++) {
-//           if(ships[a].pos[b][0] === i &&ships[a].pos[b][1] === j){
-//             board[i][j] = ships[a].print
-//           }
-//         }
-//       }
-//     }
-//   }
-//   return board
-// }
-// console.log(showShip())
