@@ -1,10 +1,10 @@
 let gameModel = {
     boardSize: 10,
     fleetClass: [
-        { name: "a", location: new Array(5), size: 5, type: 2 },
-        { name: "b", location: new Array(4), size: 4, type: 2 },
-        { name: "c", location: new Array(3), size: 3, type: 2 },
-        { name: "d", location: new Array(2), size: 2, type: 2 },
+        { name: "a", location: [], size: 5, type: 2 },
+        { name: "b", location: [], size: 4, type: 2 },
+        { name: "c", location: [], size: 3, type: 2 },
+        { name: "d", location: [], size: 2, type: 2 },
     ],
     numShip: function () {
         return this.fleetClass.length
@@ -14,12 +14,10 @@ let gameModel = {
 let col = []
 
 //__________________________________________________________________________
-let check = false
+
 
 
 console.log(generateShipLoc());
-
-//HORIZONTAL OR VERTICA
 
 
 //PRINT BOARD
@@ -34,7 +32,7 @@ function printBoard(num) {
             if (gameModel.registeredArray.indexOf(counter) != -1) {
                 row.push(print(counter))
             } else if (gameModel.registeredArray.indexOf(counter == -1)) {
-                row.push(counter)
+                row.push("_")
             }
         }
         col.push(row)
@@ -61,7 +59,6 @@ function generateShipLoc() {
     // }
 
     for (let i = 0; i < gameModel.fleetClass.length; i++) {
-        for (let j = 0; j < gameModel.fleetClass[i].location.length; j++) {
             switch (gameModel.fleetClass[i].type) {
                 case 2:
                     generateHorizontal(gameModel.fleetClass[i].name)
@@ -73,34 +70,64 @@ function generateShipLoc() {
                     buildBoard()
                     break;
             }
-        }
+        
     }
 
     //MAKING HORIZONTAL OR VERTICAL
     //MAKE CORDINATE HORIZONTAL
     function generateHorizontal(fleetName) {
-
+        let check = false
         //GET FIRST COORDINATE
         let init = 0
-        let counter = 0
+        let size = 0
+
         init = Math.floor(Math.random() * 99) + 1
         while (check == false) {
+            let counter = 0
             for (let i = 0; i < gameModel.boardSize; i++) {
-                for (let j = 0; j < gameModel.boardSize; j++) {
+                for (let j = 1; j <= gameModel.boardSize; j++) {
                     counter++
                     if (counter == init) {
-                        if (j < gameModel.boardSize - j) {
-                                   
+                        if (j > gameModel.boardSize - j) {
+                            init = init = Math.floor(Math.random() * 99) + 1
+                        } else if (j <= gameModel.boardSize - j) {
+                            check = true
+                            break;
                         }
                     }
-                    
                 }
             }
-            check = true
+
         }
+
+        for (let i = 0; i < gameModel.fleetClass.length; i++) {
+            if (check == true && gameModel.fleetClass[i].name == fleetName) {
+                size = gameModel.fleetClass[i].size
+            }
+        }
+        
+        console.log(fleetName);
+        
+        for (let i = 0; i < size; i++) {
+            for (let j = 0; j < gameModel.fleetClass.length; j++) {
+                if (gameModel.fleetClass[j].name == fleetName) {
+                    if (gameModel.fleetClass[j].location.length < size) {
+                        gameModel.fleetClass[j].location.push(init)
+                        init++
+                        
+                    }
+
+                }
+
+            }
+
+        }
+
+        console.log(gameModel.fleetClass[0].location);
+
     }
 
-    
+
     //MAKE CORDINATE VERTICAL
     function generateVertical(fleet) {
         let init = 0
@@ -112,7 +139,7 @@ function generateShipLoc() {
                         gameModel.fleetClass[i].location.unshift(5)
                     }
                     init++
-                } 
+                }
 
             }
             check = true
@@ -121,7 +148,7 @@ function generateShipLoc() {
     }
 
     function check2(b) {
-        
+
     }
 
     function check(a) {
