@@ -7,28 +7,36 @@ let board = []
 const shipList = 
 [
     {
-        name: "I",
+        name: "Aircraft Carrier",
+        code: "+",
         size: 5,
         quantity: 1,
-        coordinates: []
+        coordinates: [],
+        damage: 0
     },
     {
-        name: "V",
+        name: "Battleship",
+        code: "$",
         size: 4,
         quantity: 1,
-        coordinates: []
+        coordinates: [],
+        damage: 0
     },
     {
-        name: "%",
+        name: "Cruiser", 
+        code: "%",
         size: 3,
         quantity: 1,
-        coordinates: []
+        coordinates: [],
+        damage: 0
     },
     {
-        name: "#",
+        name: "Destroyer",
+        code: "#",
         size: 2,
         quantity: 1,
-        coordinates: []
+        coordinates: [],
+        damage: 0
     }
 ]
 
@@ -60,7 +68,6 @@ function checkCoor(rowCoor, colCoor){
             let data1 = shipList[iShipList]["coordinates"][iCoor][0]
             let data2 = shipList[iShipList]["coordinates"][iCoor][1]
             if(data1 === rowCoor && data2 === colCoor){
-                console.log(data1, rowCoor, " ======= ", data2,colCoor, shipList[iShipList]["name"])
                 return false
             }
         }
@@ -68,21 +75,11 @@ function checkCoor(rowCoor, colCoor){
     return true
 }
 
-
-
-
 function generateShip(){
     for(let iShipList = 0 ; iShipList < shipList.length ; iShipList++){
         let orientation = shipOrientation()
         let rowRandom = randomPosition()
         let colRandom = randomPosition()
-
-        //CHECK ADA ISI APA GA
-        // while(checkCoor(rowRandom, colRandom) === false){
-        //     colRandom = randomPosition()
-        //     rowRandom = randomPosition()
-        //     break;
-        // }
         
         //CHECK TO SEE IF THE RANDOM POSITION IS BIGGER THAN THE BOX OR SOMETHING IS ALREADY THERE
         let check = false 
@@ -95,13 +92,13 @@ function generateShip(){
                 let flag = true
                 for (let i = 0 ; i < shipList[iShipList]["size"] ; i++){
                     if(orientation === "Y"){
-                        if (!checkCoor(rowRandom,colRandom+i)) {
+                        if (board[rowRandom+i][colRandom] !== " ") {
                             flag = false
                             break
                         }
                     }
                     else if(orientation === "X"){
-                        if (!checkCoor(rowRandom+i,colRandom)) {
+                        if (board[rowRandom][colRandom+i] !== " "){
                             flag = false
                             break
                         }
@@ -113,27 +110,51 @@ function generateShip(){
                     rowRandom = randomPosition()
                     colRandom = randomPosition()
                 }
-                // break;
             }
     
         }
-
         //PLACED THE SHIP ACCORDING THEIR ORIENTATION FOR AS LONG AS IT'S EMPTY
         
         for(let len = 0 ; len < shipList[iShipList]["size"] ; len++){
             if(orientation === "X" ){
-                board[rowRandom][colRandom+len] = shipList[iShipList]["name"]
                 shipList[iShipList]["coordinates"].push([rowRandom,colRandom+len])
+                board[rowRandom][colRandom+len] = shipList[iShipList]["code"]
             }
             else if(orientation === "Y"){
-                board[rowRandom+len][colRandom] = shipList[iShipList]["name"]
                 shipList[iShipList]["coordinates"].push([rowRandom+len,colRandom])
+                board[rowRandom+len][colRandom] = shipList[iShipList]["code"]
             }
         }
     }
 }
 
-// console.log(generateShip())
+
+
+// DMG CALCULATOR
+function attack(atkRow, atkCol){
+    for(let iShipList = 0 ; iShipList < shipList.length ; iShipList++ ){
+        for(let iCoor = 0 ; iCoor < shipList[iShipList]["coordinates"].length; iCoor++) {
+            if(atkRow === shipList[iShipList]["coordinates"][iCoor][0] && atkCol === shipList[iShipList]["coordinates"][iCoor][1]){
+                shipList[iShipList]["damage"]++
+                shipList[iShipList]["size"]--          
+                board[atkRow][atkCol] = "X"
+            }
+            else{
+                board[atkRow][atkCol] = "X"
+            }
+        }
+    }
+}
+
+//DMG SUMMARY
+function summary(){
+    for(let iShipList = 0 ; iShipList < shipList.length ; iShipList++){
+        console.log("\n", shipList[iShipList]["code"], "got hit for", shipList[iShipList]["damage"], "many of times")
+        console.log("",shipList[iShipList]["code"],"got", shipList[iShipList]["size"], "life left")
+    }
+}
+
+
 
 function createBoard (){
     for(let row = 0 ; row < 10 ; row++){
@@ -144,16 +165,16 @@ function createBoard (){
         board.push(inner)
     }
     generateShip()
-    return board
+    for(let numAtk = 0 ; numAtk < atkAddress.length ; numAtk++){
+        attack(atkAddress[numAtk]["row"], atkAddress[numAtk]["col"])
+    }
+    console.log(board)
+    return summary()
 }
-console.log(createBoard())
 
 
 
-// function attack(row, col){
-//     for(let iAtkAddress = 0 ; iAtkAddress < atkAddress.length ; iAtkAddress++){
-//         if(row === atkAddress[iAtkAddress]["row"] && col === atkAddress[iAtkAddress]["col"]){
-//             board[row][col] = ["X"]            
-//         }
-//     }
-// }
+
+return createBoard()
+
+
