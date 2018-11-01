@@ -161,7 +161,7 @@ function attack (board, targetTembak) {
                     ship[j].status = 'hancur'
                 }
             }
-            board[targetRow][targetColumn] = '🔥'
+            board[targetRow][targetColumn] = '🔥 '
         }
     }
     // console.log(ship)
@@ -183,7 +183,7 @@ function shipStatus () {
 function shipDestroyed (board) {
     for ( let i = 0; i < board.length; i++) {
         for ( let j = 0; j< board.length; j++){
-            if (board[i][j] === 'XX') {
+            if (board[i][j] === '🔥 ') {
                 return true
             }
         }
