@@ -83,7 +83,7 @@ function boardFinishing(board) {
 }
 
 function insertBombs(board, coordinate){
-    board[coordinate[0]][coordinate[1]] = '!!!';
+    board[coordinate[0]][coordinate[1]] = '💥 ';
     return board;
 }
 
@@ -107,9 +107,9 @@ function checkEmpty(board, ship, direction) {
 function insertShips(board, ship, direction) {
     for (let i = 0; i < ship.size*2; i+=2) {
         if (direction === 'horizontal') {
-            board[ship.coordinate[0]][ship.coordinate[1]+i] = ` ${ship.graphic} `;
+            board[ship.coordinate[0]][ship.coordinate[1]+i] = `${ship.graphic} `;
         } else {
-            board[ship.coordinate[0]+i][ship.coordinate[1]] = ` ${ship.graphic} `;        
+            board[ship.coordinate[0]+i][ship.coordinate[1]] = `${ship.graphic} `;        
         }
     }
 
@@ -158,10 +158,10 @@ function checkResult(){
 }
 
 const SHIPS = [
-    { name: 'Aircraft carrier', size: 5, graphic: 'A', coordinate: [randomCoordinate(), randomCoordinate()]},
-    { name: 'Battleship', size: 4, graphic: 'B', coordinate: [randomCoordinate(), randomCoordinate()]},
-    { name: 'Cruiser', size: 3, graphic: 'C', coordinate: [randomCoordinate(), randomCoordinate()]},
-    { name: 'Destroyer', size: 2, graphic: 'D', coordinate: [randomCoordinate(), randomCoordinate()]}
+    { name: 'Aircraft carrier', size: 5, graphic: '🚢', coordinate: [randomCoordinate(), randomCoordinate()]},
+    { name: 'Battleship', size: 4, graphic: '🚤', coordinate: [randomCoordinate(), randomCoordinate()]},
+    { name: 'Cruiser', size: 3, graphic: '⛵️️', coordinate: [randomCoordinate(), randomCoordinate()]},
+    { name: 'Destroyer', size: 2, graphic: '🛶', coordinate: [randomCoordinate(), randomCoordinate()]}
 ]
 
 const args = process.argv.slice(2);
