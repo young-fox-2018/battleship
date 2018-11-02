@@ -1,28 +1,4 @@
 
-//      A   B   C   D   E   F   G   H   I   J   0
-//    +---------------------------------------+ 0
-//  1 |   |   |   |   |   |   |   |   |   |   | 1
-//    |---|---|---|---|---|---|---|---|---|---| 2
-//  2 |   |   |   |   |   |   |   |   |   |   | 3
-//    |---|---|---|---|---|---|---|---|---|---| 4
-//  3 |   |   |   |   |   |   |   |   |   |   | 5
-//    |---|---|---|---|---|---|---|---|---|---| 6
-//  4 |   |   |   |   |   |   |   |   |   |   | 7
-//    |---|---|---|---|---|---|---|---|---|---| 8
-//  5 |   |   |   |   |   |   |   |   |   |   | 9
-//    |---|---|---|---|---|---|---|---|---|---| 10 
-//  6 |   |   |   |   |   |   |   |   |   |   | 11
-//    |---|---|---|---|---|---|---|---|---|---| 12 
-//  7 |   |   |   |   |   |   |   |   |   |   | 13
-//    |---|---|---|---|---|---|---|---|---|---| 14
-//  8 |   |   |   |   |   |   |   |   |   |   | 15
-//    |---|---|---|---|---|---|---|---|---|---| 16
-//  9 |   |   |   |   |   |   |   |   |   |   | 17
-//    |---|---|---|---|---|---|---|---|---|---| 18
-// 10 |   |   |   |   |   |   |   |   |   |   | 19
-//    +---------------------------------------+ 20
-//    0123456789012345678901234567890123456789012
-
 function printBoard(num) {
   var result = []
   var batassamping = (num * 2)
@@ -75,6 +51,7 @@ const ships = [
   {name: 'Cruiser' ,size: 3, pos: [], print:'C'},
   {name: 'Destroyer' ,size: 2, pos: [],print:'D'},
 ]
+
 function printShip() {
 
   var arah = ['vertikal' , 'horizontal']
@@ -145,7 +122,9 @@ function printShip() {
 }
 
 var bom = process.argv.slice(2)
-console.log(printShip())
+// console.log(printShip())
+
+const papan = printShip()
 
 function checkCoordinate(row, col) {
    //apakah coordinate ini sudah di pakai di kapal yg lain ?
@@ -171,26 +150,22 @@ function random() {
   return angka
 }
 
+function tenggelam() {
+  let counter = 0 
+  for (let i = 0 ; i < papan.length ; i++) {
 
-// console.log(bom)
-// var tampung = []
-// for (let i = 0 ; i < bom.length ; i++) {
-//   tampung.push([bom[i][0] , bom[i][1]])
-// }
-// console.log(tampung)
-// console.log(bom)
-
-function bandingBom() {
-  var kena = false
-  for (let i = 0 ; i < ships.length ; i++) {
-    for(let j = 0 ;j< ships[i].pos.length;j++ ){
-      // console.log(ships[i].pos[j])
-      for(let a = 0 ; a < tampung.length ; a++) {
-          if(ships[i].pos[j][0] == tampung[a][0] && ships[i].pos[j][1] == tampung[a][1]){
-            kena = true
-          }
-        }
+    for(let j = 0 ; j < papan[i].length ; j++) {
+      if(papan[i][j] === 'X') {
+        counter++
+      }
     }
   }
-  return kena
+  if(counter !== 0 ) {
+    return ` Yeay anda berhasil menenggelamkan ${counter} kapal`
+  } else {
+    return `Yah anda gagal`
+  }
 }
+
+console.log(papan)
+console.log(tenggelam())
